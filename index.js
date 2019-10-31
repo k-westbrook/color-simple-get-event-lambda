@@ -6,6 +6,9 @@ exports.handler = (event, context, callback) => {
   const params = {
     TableName: 'EVENT_DETAILS',
     KeyConditionExpression: "#event_id = :event_id",
+    ExpressionAttributeNames: {
+      "#event_id": "event_id"
+    },
     ExpressionAttributeValues: {
       ":event_id": event.event_id
     }
@@ -15,7 +18,7 @@ exports.handler = (event, context, callback) => {
 
     let recordReturned = data.Items[0];
 
-    if (err || (recordReturned.password !== event.password)) {
+    if (err) {
 
       data = {
         statusCode: 400,
